@@ -1,0 +1,32 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:EventsExample.Views">
+	<Design.PreviewWith>
+		<controls:ControlWithConnectors />
+	</Design.PreviewWith>
+
+	<Style Selector="controls|ControlWithConnectors">
+		<!-- Set Defaults -->
+		<Setter Property="Template">
+			<ControlTemplate>
+				<Canvas Name="ControlWithConnector" Height="110" Width="110" Background="Transparent">
+					<Rectangle Height="100" Width="100" Stroke="Green" StrokeThickness="4">
+						<Rectangle.RenderTransform>
+							<TranslateTransform X="5" Y="5"/>
+						</Rectangle.RenderTransform>
+					</Rectangle>
+					<Ellipse Width="13" Height="13" Fill="Green">
+						<Ellipse.RenderTransform>
+							<TranslateTransform X="97" Y="50"/>
+						</Ellipse.RenderTransform>
+					</Ellipse>
+					<TextBlock Text="1" FontSize="50" Width="75" Height="75">
+						<TextBlock.RenderTransform>
+							<TranslateTransform X="40" Y="28"/>
+						</TextBlock.RenderTransform>
+					</TextBlock>
+				</Canvas>
+			</ControlTemplate>
+		</Setter>
+	</Style>
+</Styles>
