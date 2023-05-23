@@ -27,6 +27,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\and.axaml.cs">
+      <DependentUpon>and.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\output.axaml.cs">
+      <DependentUpon>output.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\input.axaml.cs">
+      <DependentUpon>input.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\sm.axaml.cs">
+      <DependentUpon>sm.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\xor.axaml.cs">
+      <DependentUpon>xor.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\not.axaml.cs">
+      <DependentUpon>not.axaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\or.axaml.cs">
       <DependentUpon>or.axaml</DependentUpon>
     </Compile>

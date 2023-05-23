@@ -1,15 +1,15 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="using:EventsExample.Views">
+        xmlns:controls="using:ChaChaCha.Views">
 	<Design.PreviewWith>
-		<controls:ControlWithConnectors />
+		<controls:OutputLogic />
 	</Design.PreviewWith>
 
-	<Style Selector="controls|ControlWithConnectors">
+	<Style Selector="controls|OutputLogic">
 		<!-- Set Defaults -->
 		<Setter Property="Template">
 			<ControlTemplate>
-				<Canvas Name="ControlWithConnector" Height="110" Width="110" Background="Transparent">
+				<Canvas Name="OutputLogic" Height="110" Width="110" Background="Transparent">
 					<Rectangle Height="100" Width="100" Stroke="Red" StrokeThickness="4">
 						<Rectangle.RenderTransform>
 							<TranslateTransform X="5" Y="5"/>

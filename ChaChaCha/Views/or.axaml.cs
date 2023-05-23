@@ -6,12 +6,12 @@ using Avalonia.Interactivity;
 using Microsoft.CodeAnalysis.Operations;
 using System;
 
-namespace EventsExample.Views
+namespace ChaChaCha.Views
 {
-    public class ControlWithConnectors : TemplatedControl
+    public class OrLogic : TemplatedControl
     {
         public static readonly RoutedEvent<PointerEventArgs> PointerEnterEvent =
-            RoutedEvent.Register<ControlWithConnectors, PointerEventArgs>(
+            RoutedEvent.Register<OrLogic, PointerEventArgs>(
                 nameof(PointerEnter), RoutingStrategies.Bubble | RoutingStrategies.Tunnel);
 
         public event EventHandler<PointerEventArgs> PointerEnter

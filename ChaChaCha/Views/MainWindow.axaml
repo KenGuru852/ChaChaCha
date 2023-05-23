@@ -3,6 +3,7 @@
         xmlns:vm="using:ChaChaCha.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:views="clr-namespace:ChaChaCha.Views"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 		Width="1350" Height="800"
         x:Class="ChaChaCha.Views.MainWindow"
@@ -64,6 +65,7 @@
 						<Canvas Name="canvas"/>
 					</ItemsPanelTemplate>
 				</ItemsControl.ItemsPanel>
+
 			</ItemsControl>
 			<Border BorderBrush="Green" BorderThickness="6" Grid.Column="0">
 				<StackPanel>
