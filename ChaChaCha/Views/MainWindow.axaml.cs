@@ -213,6 +213,17 @@ namespace ChaChaCha.Views
                         }
                     }
                 }
+                else if (control.DataContext is Connector connector)
+                {
+                    if (this.DataContext is MainWindowViewModel vModel)
+                    {
+                        if (vModel.ButtonPressed == -1)
+                        {
+                            vModel.Shapes.Remove(connector);
+                            vModel.ButtonPressed = 0;
+                        }
+                    }
+                }
             }
         }
 
