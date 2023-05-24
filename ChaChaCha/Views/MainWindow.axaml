@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:views="clr-namespace:ChaChaCha.Views"
 		xmlns:models="clr-namespace:ChaChaCha.Models"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="1350" d:DesignHeight="800"
 		Width="1350" Height="800"
         x:Class="ChaChaCha.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
@@ -31,25 +31,25 @@
 					<MenuItem Header="ВЫЙТИ"/>
 				</MenuItem>
 			</Menu>
-			<Button Width="70" Height="70" Grid.Column="2">
+			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="1" Width="70" Height="70" Grid.Column="2">
 				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">И</TextBlock>
 			</Button>
-			<Button Height="70" Width="70" Grid.Column="3">
+			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="2" Height="70" Width="70" Grid.Column="3">
 				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">ИЛИ</TextBlock>
 			</Button>
-			<Button Height="70" Width="70" Grid.Column="4">
+			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="3" Height="70" Width="70" Grid.Column="4">
 				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">НЕ</TextBlock>
 			</Button>
-			<Button Height="70" Width="70" Grid.Column="5">
+			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="4" Height="70" Width="70" Grid.Column="5">
 				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">XOR</TextBlock>
 			</Button>
-			<Button Height="70" Width="70" Grid.Column="6">
+			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="5" Height="70" Width="70" Grid.Column="6">
 				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">SM</TextBlock>
 			</Button>
-			<Button Width="100" Height="70" Grid.Column="8">
+			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="6" Width="100" Height="70" Grid.Column="8">
 				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">ВХОД</TextBlock>
 			</Button>
-			<Button Width="100" Height="70" Grid.Column="9">
+			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="7" Width="100" Height="70" Grid.Column="9">
 				<TextBlock FontSize="22" TextAlignment="Center" VerticalAlignment="Center">ВЫХОД</TextBlock>
 			</Button>
 			<Border Width="200" Height="70" BorderBrush="Red" BorderThickness="6" Grid.Column="11">
@@ -59,11 +59,11 @@
 				<TextBox FontSize="18" VerticalContentAlignment="Center" TextAlignment="Center" Text="Название схемы"></TextBox>
 			</Border>
 		</Grid>
-		<Grid Grid.Row="1" ColumnDefinitions="200, *">
-			<ItemsControl PointerPressed="OnPointerPressed" Items="{Binding Shapes}" Grid.Column="1">
+		<Grid PointerPressed="OnPointerPressed"  Grid.Row="1" ColumnDefinitions="200, *">
+			<ItemsControl PointerReleased="OnPointerReleased" Items="{Binding Shapes}" Grid.Column="1">
 				<ItemsControl.ItemsPanel>
 					<ItemsPanelTemplate>
-						<Canvas Name="canvas"/>
+						<Canvas Name="canvas" Background="White"/>
 					</ItemsPanelTemplate>
 				</ItemsControl.ItemsPanel>
 
