@@ -18,10 +18,15 @@ namespace ChaChaCha.Models
         private bool secondinput;
         private bool thirdinput;
         private bool firstoutput;
+        private string realname;
         private bool secondoutput;
         private bool thirdoutput;
         private string reccolor;
-        public string RealName { get; set; }
+        public string RealName
+        {
+            get => realname;
+            set => SetAndRaise(ref realname, value);
+        }
         public string Name { get; set; }
 
         public string RecColor

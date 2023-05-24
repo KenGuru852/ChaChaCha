@@ -132,7 +132,7 @@ namespace ChaChaCha.Views
                                 Height = 100,
                                 Width = 100,
                                 Name = "Input",
-                                RealName = "1",
+                                RealName = "0",
                                 RecColor = "Green",
                                 FirstInput = false,
                                 SecondInput = false,
@@ -151,7 +151,7 @@ namespace ChaChaCha.Views
                                 Height = 100,
                                 Width = 100,
                                 Name = "Output",
-                                RealName = "1",
+                                RealName = "0",
                                 RecColor = "Red",
                                 FirstInput = false,
                                 SecondInput = true,
@@ -182,10 +182,26 @@ namespace ChaChaCha.Views
                         canvas.Name.Equals("canvas")));
                     if (this.DataContext is MainWindowViewModel vModel)
                     {
-                        if (vModel.ButtonPressed == -1)
+                        if (pointerPressedEventArgs.Source is not Ellipse)
                         {
-                            vModel.Shapes.Remove(rectangle);
-                            vModel.ButtonPressed = 0;
+                            if (vModel.ButtonPressed == 0)
+                            {
+                                Debug.WriteLine("1");
+                                if (rectangle.Name == "Input")
+                                {
+                                    Debug.WriteLine("2");
+                                    if (rectangle.RealName == "0")
+                                    {
+                                        rectangle.RealName = "1";
+                                    }
+                                    else rectangle.RealName = "0";
+                                }
+                            }
+                            if (vModel.ButtonPressed == -1)
+                            {
+                                vModel.Shapes.Remove(rectangle);
+                                vModel.ButtonPressed = 0;
+                            }
                         }
                     }
 
@@ -206,7 +222,6 @@ namespace ChaChaCha.Views
                                 Name = "Connector",
                                 FirstRectangle = rectangle,
                             });
-
 
                             this.PointerMoved += PointerMoveDrawLine;
                             this.PointerReleased += PointerPressedReleasedDrawLine;
