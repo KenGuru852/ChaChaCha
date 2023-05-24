@@ -180,6 +180,14 @@ namespace ChaChaCha.Views
                         .OfType<Canvas>()
                         .FirstOrDefault(canvas => string.IsNullOrEmpty(canvas.Name) == false &&
                         canvas.Name.Equals("canvas")));
+                    if (this.DataContext is MainWindowViewModel vModel)
+                    {
+                        if (vModel.ButtonPressed == -1)
+                        {
+                            vModel.Shapes.Remove(rectangle);
+                            vModel.ButtonPressed = 0;
+                        }
+                    }
 
                     if (pointerPressedEventArgs.Source is not Ellipse)
                     {
