@@ -1,0 +1,57 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:ChaChaCha.Views">
+	<Design.PreviewWith>
+		<controls:Element />
+	</Design.PreviewWith>
+
+	<Style Selector="controls|Element">
+		<!-- Set Defaults -->
+		<Setter Property="Template">
+			<ControlTemplate>
+				<Canvas Name="Element" Height="110" Width="110" Background="Transparent">
+					<Rectangle Height="100" Width="100" Stroke="{Binding RecColor}" StrokeThickness="2">
+						<Rectangle.RenderTransform>
+							<TranslateTransform X="5" Y="5"/>
+						</Rectangle.RenderTransform>
+					</Rectangle>
+					<Ellipse IsVisible="{Binding FirstInput}" IsEnabled="{Binding FirstInput}" Width="13" Height="13" Fill="Green">
+						<Ellipse.RenderTransform>
+							<TranslateTransform X="0.1" Y="15"/>
+						</Ellipse.RenderTransform>
+					</Ellipse>
+					<Ellipse IsVisible="{Binding ThirdInput}" IsEnabled="{Binding ThirdInput}" Width="13" Height="13" Fill="Green">
+						<Ellipse.RenderTransform>
+							<TranslateTransform X="0.1" Y="85"/>
+						</Ellipse.RenderTransform>
+					</Ellipse>
+					<Ellipse IsVisible="{Binding SecondInput}" IsEnabled="{Binding SecondInput}" Width="13" Height="13" Fill="Green">
+						<Ellipse.RenderTransform>
+							<TranslateTransform X="0.1" Y="50"/>
+						</Ellipse.RenderTransform>
+					</Ellipse>
+					<Ellipse IsVisible="{Binding ThirdOutput}" IsEnabled="{Binding ThirdOutput}" Width="13" Height="13" Fill="Red">
+						<Ellipse.RenderTransform>
+							<TranslateTransform X="97" Y="85"/>
+						</Ellipse.RenderTransform>
+					</Ellipse>
+					<Ellipse IsVisible="{Binding FirstOutput}" IsEnabled="{Binding FirstOutput}" Width="13" Height="13" Fill="Red">
+						<Ellipse.RenderTransform>
+							<TranslateTransform X="97" Y="15"/>
+						</Ellipse.RenderTransform>
+					</Ellipse>
+					<Ellipse IsVisible="{Binding SecondOutput}" IsEnabled="{Binding SecondOutput}" Width="13" Height="13" Fill="Red">
+						<Ellipse.RenderTransform>
+							<TranslateTransform X="97" Y="50"/>
+						</Ellipse.RenderTransform>
+					</Ellipse>
+					<TextBlock FontSize="30" Text="{Binding RealName}" Width="100" Height="100">
+						<TextBlock.RenderTransform>
+							<TranslateTransform X="25" Y="35"/>
+						</TextBlock.RenderTransform>
+					</TextBlock>
+				</Canvas>
+			</ControlTemplate>
+		</Setter>
+	</Style>
+</Styles>
