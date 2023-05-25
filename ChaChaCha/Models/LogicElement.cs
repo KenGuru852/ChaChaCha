@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,25 +30,123 @@ namespace ChaChaCha.Models
         private string reccolor;
         public List<int> conntecor_ids = new List<int>();
         public int output_value = 0;
+        public int output_value_second = 0;
+
+        private int OutputChooser(Connector con, ObservableCollection<IElement> shapes, LogicElement firstElement)
+        {
+            int first_id = con.connector_id;
+            int second_id = 0;
+            for (int i = 0; i < shapes.Count; i++)
+            {
+                if (shapes[i] is Connector secondcon)
+                {
+                    if (secondcon.connector_id != first_id)
+                    {
+                        if (secondcon.FirstRectangle == firstElement)
+                        {
+                            second_id = secondcon.connector_id;
+                        }
+                    }
+                }
+            }
+            if (first_id < second_id)
+            {
+                return firstElement.output_value;
+            }
+            if (first_id > second_id)
+            {
+                return firstElement.output_value_second;
+            }
+            return 0;
+        }
         public void update(int oper, int current_id, ObservableCollection<IElement> shapes, Connector con)
         {
-            int firstVal = con.FirstRectangle.output_value;
-            int secondVal = 0;
-            for (int i = 0; i < conntecor_ids.Count; i++)
+            int firstVal = 0;
+            if (con.FirstRectangle.Name == "SM")
             {
-                if (conntecor_ids[i] != current_id)
+                firstVal = OutputChooser(con, shapes, con.FirstRectangle);
+            }
+            else
+            {
+                firstVal = con.FirstRectangle.output_value;
+            }
+            int secondVal = 0;
+            int thirdVal = 0;
+            if (oper == 1 || oper == 2 || oper == 3 || oper == 4 || oper == 7)
+            {
+                for (int i = 0; i < conntecor_ids.Count; i++)
                 {
-                    foreach(var item in shapes)
+                    if (conntecor_ids[i] != current_id)
                     {
-                        if (item is Connector tempcon)
+                        foreach (var item in shapes)
                         {
-                            if (tempcon.connector_id == conntecor_ids[i])
+                            if (item is Connector tempcon)
                             {
-                                secondVal = tempcon.FirstRectangle.output_value;
+                                if (tempcon.connector_id == conntecor_ids[i])
+                                {
+                                    secondVal = tempcon.FirstRectangle.output_value;
+                                }
                             }
                         }
                     }
                 }
+            }
+            if (oper == 5)
+            {
+                for (int i = 0; i < conntecor_ids.Count; i++)
+                {
+                    foreach (var item in shapes)
+                    {
+                        if (item is Connector tempcon)
+                        {
+                            if (tempcon.connector_id == conntecor_ids[i] && i == 0)
+                            {
+                                firstVal = tempcon.FirstRectangle.output_value;
+                            }
+                            if (tempcon.connector_id == conntecor_ids[i] && i == 1)
+                            {
+                                secondVal = tempcon.FirstRectangle.output_value;
+                            }
+                            if (tempcon.connector_id == conntecor_ids[i] && i == 2)
+                            {
+                                thirdVal = tempcon.FirstRectangle.output_value;
+                            }
+                        }
+                    }
+                }
+                int temp = firstVal + secondVal + thirdVal;
+                if (temp == 0)
+                {
+                    output_value = 0;
+                    output_value_second = 0;
+                }
+                if (temp == 1)
+                {
+                    output_value = 1;
+                    output_value_second = 0;
+                }
+                if (temp == 2)
+                {
+                    output_value = 0;
+                    output_value_second = 1;
+                }
+                if (temp == 3)
+                {
+                    output_value = 1;
+                    output_value_second = 1;
+                }
+               /* Debug.WriteLine("Summator: ");
+                Debug.WriteLine("X1 = ");
+                Debug.WriteLine(firstVal);
+                Debug.WriteLine("X2 = ");
+                Debug.WriteLine(secondVal);
+                Debug.WriteLine("X3 = ");
+                Debug.WriteLine(thirdVal);
+                Debug.WriteLine("First Output = ");
+                Debug.WriteLine(output_value);
+                Debug.WriteLine("Second output = ");
+                Debug.WriteLine(output_value_second);
+                Debug.WriteLine("------------------------------");*/
             }
             if (oper == 1)
             {
@@ -63,7 +162,7 @@ namespace ChaChaCha.Models
             }
             if (oper == 3)
             {
-                if (con.FirstRectangle.output_value == 0)
+                if (firstVal == 0)
                     con.SecondRectangle.output_value = 1;
                 else con.SecondRectangle.output_value = 0;
             }
@@ -78,6 +177,11 @@ namespace ChaChaCha.Models
             }
             if (oper == 7)
             {
+                if (con.FirstRectangle.Name == "SM")
+                {
+                    con.SecondRectangle.RealName = OutputChooser(con, shapes, con.FirstRectangle).ToString();
+                }
+                else
                 con.SecondRectangle.RealName = con.FirstRectangle.output_value.ToString();
             }
             //Debug.WriteLine(con.SecondRectangle.output_value);
