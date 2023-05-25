@@ -1,6 +1,8 @@
 ﻿using Avalonia.Controls.Shapes;
+using Avalonia.Markup.Xaml.Templates;
 using ChaChaCha.Models;
 using ReactiveUI;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 
@@ -8,7 +10,20 @@ namespace ChaChaCha.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
+
         private ObservableCollection<IElement> shapes;
+        public ObservableCollection<IElement> Shapes
+        {
+            get => shapes;
+            set => this.RaiseAndSetIfChanged(ref shapes, value);
+        }
+        private ObservableCollection<string> shapes_name;
+        public ObservableCollection<string> Shapes_name
+        {
+            get => shapes_name;
+            set => this.RaiseAndSetIfChanged(ref shapes_name, value);
+        }
+        private List<ObservableCollection<IElement>> shapesList;
         //////////////////// ДЛЯ ДОБАВЛЕНИЯ ФИГУР НА ПОЛОТНО ////////////////////////////////
         private int buttonpressed;
         public int ButtonPressed
@@ -16,11 +31,36 @@ namespace ChaChaCha.ViewModels
             get => buttonpressed;
             set => this.RaiseAndSetIfChanged(ref buttonpressed, value);
         }
+        private int circNumber;
+        public int CircNumber
+        {
+            get => circNumber;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref circNumber, value);
+                if (CircNumber == -1)
+                {
+                    CircNumber = 0;
+                }
+                Shapes = shapesList[CircNumber];
+            
+            }
+        }
         private int andButton;
         public int AndButton
         {
             get => andButton;
             set => this.RaiseAndSetIfChanged(ref andButton, value);
+        }
+        private string currentCircName;
+        public string CurrentCircName
+        {
+            get => currentCircName;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref currentCircName, value);
+                //shapes_name[circNumber] = currentCircName;
+            }
         }
         private int orButton;
         public int OrButton
@@ -61,18 +101,40 @@ namespace ChaChaCha.ViewModels
         /////////////////////////////////////////////////////////////////////////////////////
         public MainWindowViewModel()
         {
+            shapes_name = new ObservableCollection<string>();
+            shapes_name.Add("first_citcuit");
+            currentCircName = shapes_name[0];
             Shapes = new ObservableCollection<IElement>();
+            shapesList= new List<ObservableCollection<IElement>>();
+            shapesList.Add(Shapes);
+            CircNumber = 0;
+            Debug.WriteLine(shapesList.Count);
             buttonpressed = 0;
-        }
-        public ObservableCollection<IElement> Shapes
-        {
-            get => shapes;
-            set => this.RaiseAndSetIfChanged(ref shapes, value);
         }
         
         public void ElementToDraw(int number)
         {
             buttonpressed = number;
+        }
+        public void AddCircuit()
+        {
+            shapesList.Add(new ObservableCollection<IElement>());
+            shapes_name.Add("new_circuit");
+        }
+        public void DeleteCircuit()
+        {
+            int temp = circNumber;
+            if (shapesList.Count > 1) 
+            {
+                shapesList.RemoveAt(temp);
+                shapes_name.RemoveAt(temp);
+                circNumber = 0;
+            }
+        }
+        public void Rename()
+        {
+
+            shapes_name[circNumber] = currentCircName;
         }
         public void Update()
         {
