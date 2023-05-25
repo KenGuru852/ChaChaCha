@@ -58,6 +58,7 @@ namespace ChaChaCha.ViewModels
             get => outputButton;
             set => this.RaiseAndSetIfChanged(ref outputButton, value);
         }
+        /////////////////////////////////////////////////////////////////////////////////////
         public MainWindowViewModel()
         {
             Shapes = new ObservableCollection<IElement>();
@@ -73,6 +74,47 @@ namespace ChaChaCha.ViewModels
         {
             buttonpressed = number;
         }
-        
+        public void Update()
+        {
+            for (int i = 0; i < 10;)
+            {
+                foreach (var item in Shapes)
+                {
+                    if (item is Connector connector)
+                    {
+                        int opertaion = 0;
+                        switch (connector.SecondRectangle.Name)
+                        {
+                            case "And":
+                                opertaion = 1;
+                                break;
+                            case "Or":
+                                opertaion = 2;
+                                break;
+                            case "Not":
+                                opertaion = 3;
+                                break;
+                            case "XOR":
+                                opertaion = 4;
+                                break;
+                            case "SM":
+                                opertaion = 5;
+                                break;
+                            case "Input":
+                                opertaion = 6;
+                                break;
+                            case "Output":
+                                opertaion = 7;
+                                break;
+                        }
+                        if (opertaion != 0)
+                        {
+                            connector.SecondRectangle.update(opertaion, connector.connector_id, Shapes, connector);
+                        }
+                    }
+                }
+                i++;
+            }
+        }
     }
 }

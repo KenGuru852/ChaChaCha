@@ -14,50 +14,8 @@ namespace ChaChaCha.Models
         private Point endPoint;
         private LogicElement firstRectangle;
         private LogicElement secondRectangle;
-        private bool firstinput;
-        private bool secondinput;
-        private bool thirdinput;
-        private bool firstoutput;
-        private bool secondoutput;
-        private bool thirdoutput;
-        private string reccolor;
-        public string RecColor
-        {
-            get => reccolor;
-            set => reccolor = value;
-        }
-        public bool FirstInput
-        {
-            get => firstinput;
-            set => SetAndRaise(ref firstinput, value);
-        }
-        public bool SecondInput
-        {
-            get => secondinput;
-            set => SetAndRaise(ref secondinput, value);
-        }
-        public bool ThirdInput
-        {
-            get => thirdinput;
-            set => SetAndRaise(ref thirdinput, value);
-        }
-        public bool FirstOutput
-        {
-            get => firstoutput;
-            set => SetAndRaise(ref firstoutput, value);
-        }
-        public bool SecondOutput
-        {
-            get => secondoutput;
-            set => SetAndRaise(ref secondoutput, value);
-        }
-        public bool ThirdOutput
-        {
-            get => thirdoutput;
-            set => SetAndRaise(ref thirdoutput, value);
-        }
+        public int connector_id { get; set; }
         public string Name { get; set; }
-        public string RealName { get; set; }
         public Point StartPoint
         {
             get => startPoint;

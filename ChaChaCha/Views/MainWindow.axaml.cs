@@ -13,6 +13,7 @@ namespace ChaChaCha.Views
 {
     public partial class MainWindow : Window
     {
+        int id_counter = 0;
         private Point pointPointerReleased;
         private Point pointPointerPressed;
         private Point pointerPositionIntoShape;
@@ -186,15 +187,19 @@ namespace ChaChaCha.Views
                         {
                             if (vModel.ButtonPressed == 0)
                             {
-                                Debug.WriteLine("1");
                                 if (rectangle.Name == "Input")
                                 {
-                                    Debug.WriteLine("2");
                                     if (rectangle.RealName == "0")
                                     {
+                                        rectangle.output_value = 1;
                                         rectangle.RealName = "1";
+                                        vModel.Update();
                                     }
-                                    else rectangle.RealName = "0";
+                                    else
+                                    { rectangle.RealName = "0";
+                                        rectangle.output_value = 0;
+                                        vModel.Update();
+                                    }
                                 }
                             }
                             if (vModel.ButtonPressed == -1)
@@ -220,9 +225,9 @@ namespace ChaChaCha.Views
                                 StartPoint = pointPointerPressed,
                                 EndPoint = pointPointerPressed,
                                 Name = "Connector",
+                                connector_id = id_counter++,
                                 FirstRectangle = rectangle,
                             });
-
                             this.PointerMoved += PointerMoveDrawLine;
                             this.PointerReleased += PointerPressedReleasedDrawLine;
                         }
@@ -307,6 +312,12 @@ namespace ChaChaCha.Views
                 {
                     Connector connector = viewModel.Shapes[viewModel.Shapes.Count - 1] as Connector;
                     connector.SecondRectangle = rectangle;
+                    rectangle.conntecor_ids.Add(id_counter - 1);
+                    //Debug.WriteLine(rectangle.conntecor_ids.Count);
+                    if (this.DataContext is MainWindowViewModel vvModel)
+                    {
+                        vvModel.Update();
+                    }
                     return;
                 }
             }
