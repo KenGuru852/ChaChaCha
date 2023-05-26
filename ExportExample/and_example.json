@@ -1,0 +1,187 @@
+[
+  {
+    "connector_id": 0,
+    "Name": "Connector",
+    "StartPoint": {
+      "X": 242,
+      "Y": 131,
+      "IsDefault": false
+    },
+    "EndPoint": {
+      "X": 402,
+      "Y": 221,
+      "IsDefault": false
+    },
+    "FirstRectangle": {
+      "connector_ids": null,
+      "RealName": "1",
+      "Name": "Input",
+      "RecColor": "Green",
+      "StartPoint": {
+        "X": 141,
+        "Y": 76,
+        "IsDefault": false
+      },
+      "Height": 100,
+      "FirstInput": false,
+      "SecondInput": false,
+      "ThirdInput": false,
+      "FirstOutput": false,
+      "SecondOutput": true,
+      "ThirdOutput": false,
+      "Width": 100,
+      "conntecor_ids": [],
+      "output_value": 1,
+      "output_value_second": 0
+    },
+    "SecondRectangle": {
+      "connector_ids": null,
+      "RealName": "And",
+      "Name": "And",
+      "RecColor": "Black",
+      "StartPoint": {
+        "X": 400,
+        "Y": 203,
+        "IsDefault": false
+      },
+      "Height": 100,
+      "FirstInput": true,
+      "SecondInput": false,
+      "ThirdInput": true,
+      "FirstOutput": false,
+      "SecondOutput": true,
+      "ThirdOutput": false,
+      "Width": 100,
+      "conntecor_ids": [
+        0,
+        1
+      ],
+      "output_value": 1,
+      "output_value_second": 0
+    }
+  },
+  {
+    "connector_id": 1,
+    "Name": "Connector",
+    "StartPoint": {
+      "X": 239,
+      "Y": 322,
+      "IsDefault": false
+    },
+    "EndPoint": {
+      "X": 408,
+      "Y": 294,
+      "IsDefault": false
+    },
+    "FirstRectangle": {
+      "connector_ids": null,
+      "RealName": "1",
+      "Name": "Input",
+      "RecColor": "Green",
+      "StartPoint": {
+        "X": 134,
+        "Y": 266,
+        "IsDefault": false
+      },
+      "Height": 100,
+      "FirstInput": false,
+      "SecondInput": false,
+      "ThirdInput": false,
+      "FirstOutput": false,
+      "SecondOutput": true,
+      "ThirdOutput": false,
+      "Width": 100,
+      "conntecor_ids": [],
+      "output_value": 1,
+      "output_value_second": 0
+    },
+    "SecondRectangle": {
+      "connector_ids": null,
+      "RealName": "And",
+      "Name": "And",
+      "RecColor": "Black",
+      "StartPoint": {
+        "X": 400,
+        "Y": 203,
+        "IsDefault": false
+      },
+      "Height": 100,
+      "FirstInput": true,
+      "SecondInput": false,
+      "ThirdInput": true,
+      "FirstOutput": false,
+      "SecondOutput": true,
+      "ThirdOutput": false,
+      "Width": 100,
+      "conntecor_ids": [
+        0,
+        1
+      ],
+      "output_value": 1,
+      "output_value_second": 0
+    }
+  },
+  {
+    "connector_id": 2,
+    "Name": "Connector",
+    "StartPoint": {
+      "X": 503,
+      "Y": 261,
+      "IsDefault": false
+    },
+    "EndPoint": {
+      "X": 650,
+      "Y": 279,
+      "IsDefault": false
+    },
+    "FirstRectangle": {
+      "connector_ids": null,
+      "RealName": "And",
+      "Name": "And",
+      "RecColor": "Black",
+      "StartPoint": {
+        "X": 400,
+        "Y": 203,
+        "IsDefault": false
+      },
+      "Height": 100,
+      "FirstInput": true,
+      "SecondInput": false,
+      "ThirdInput": true,
+      "FirstOutput": false,
+      "SecondOutput": true,
+      "ThirdOutput": false,
+      "Width": 100,
+      "conntecor_ids": [
+        0,
+        1
+      ],
+      "output_value": 1,
+      "output_value_second": 0
+    },
+    "SecondRectangle": {
+      "connector_ids": null,
+      "RealName": "1",
+      "Name": "Output",
+      "RecColor": "Red",
+      "StartPoint": {
+        "X": 644,
+        "Y": 221,
+        "IsDefault": false
+      },
+      "Height": 100,
+      "FirstInput": false,
+      "SecondInput": true,
+      "ThirdInput": false,
+      "FirstOutput": false,
+      "SecondOutput": false,
+      "ThirdOutput": false,
+      "Width": 100,
+      "conntecor_ids": [
+        2
+      ],
+      "output_value": 0,
+      "output_value_second": 0
+    }
+  }
+]

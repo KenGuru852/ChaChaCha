@@ -2,9 +2,11 @@
 using Avalonia.Markup.Xaml.Templates;
 using ChaChaCha.Models;
 using ReactiveUI;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using PathFile = System.IO.Path;
 
 namespace ChaChaCha.ViewModels
 {
@@ -16,6 +18,18 @@ namespace ChaChaCha.ViewModels
         {
             get => shapes;
             set => this.RaiseAndSetIfChanged(ref shapes, value);
+        }
+        private ObservableCollection<LogicElement> logic_elements;
+        public ObservableCollection<LogicElement> Logic_elements
+        {
+            get => logic_elements;
+            set => this.RaiseAndSetIfChanged(ref logic_elements, value);
+        }
+        private ObservableCollection<Connector> all_connectors;
+        public ObservableCollection<Connector> All_connectors
+        {
+            get => all_connectors;
+            set => this.RaiseAndSetIfChanged(ref all_connectors, value);
         }
         private ObservableCollection<string> shapes_name;
         public ObservableCollection<string> Shapes_name
@@ -99,8 +113,11 @@ namespace ChaChaCha.ViewModels
             set => this.RaiseAndSetIfChanged(ref outputButton, value);
         }
         /////////////////////////////////////////////////////////////////////////////////////
+        public JSONProjectSaver jsonSaver = new JSONProjectSaver();
         public MainWindowViewModel()
         {
+            logic_elements = new ObservableCollection<LogicElement>();
+            all_connectors = new ObservableCollection<Connector>();
             shapes_name = new ObservableCollection<string>();
             shapes_name.Add("first_citcuit");
             currentCircName = shapes_name[0];
@@ -110,8 +127,8 @@ namespace ChaChaCha.ViewModels
             CircNumber = 0;
             Debug.WriteLine(shapesList.Count);
             buttonpressed = 0;
+            //(ObservableCollection<LogicElement>, ObservableCollection<Connector>) tuple = (logic_elements, all_connectors);
         }
-        
         public void ElementToDraw(int number)
         {
             buttonpressed = number;
@@ -135,6 +152,14 @@ namespace ChaChaCha.ViewModels
         {
 
             shapes_name[circNumber] = currentCircName;
+        }
+        public void SaveProject(string path)
+        {
+            if (PathFile.GetExtension(path) == ".json")
+            {
+                //jsonSaver.Save(shapesList, path);
+                jsonSaver.Save(all_connectors, path);
+            }
         }
         public void Update()
         {

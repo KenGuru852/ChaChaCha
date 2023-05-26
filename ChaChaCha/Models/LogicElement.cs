@@ -28,6 +28,12 @@ namespace ChaChaCha.Models
         private bool secondoutput;
         private bool thirdoutput;
         private string reccolor;
+        private List<int> con_ids;
+        public List<int> connector_ids
+        {
+            get => con_ids;
+            set => SetAndRaise(ref con_ids, value);
+        }
         public List<int> conntecor_ids = new List<int>();
         public int output_value = 0;
         public int output_value_second = 0;
@@ -185,6 +191,7 @@ namespace ChaChaCha.Models
                 con.SecondRectangle.RealName = con.FirstRectangle.output_value.ToString();
             }
             //Debug.WriteLine(con.SecondRectangle.output_value);
+            //Debug.WriteLine(con.FirstRectangle.conntecor_ids.Count);
         }
         public string RealName
         {

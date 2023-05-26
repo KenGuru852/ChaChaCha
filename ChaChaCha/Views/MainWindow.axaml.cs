@@ -21,6 +21,25 @@ namespace ChaChaCha.Views
         {
             InitializeComponent();
         }
+        public async void ExportClick(object sender, RoutedEventArgs eventArgs)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+
+            saveFileDialog.Filters.Add(
+                new FileDialogFilter
+                {
+                    Name = "JSON files",
+                    Extensions = new string[] { "json" }.ToList()
+                });
+            string? path = await saveFileDialog.ShowAsync(this);
+            if (path != null)
+            {
+                if (this.DataContext is MainWindowViewModel dataContext)
+                {
+                    dataContext.SaveProject(path);
+                }
+            }
+        }
         private void OnPointerReleased(object? sender, PointerReleasedEventArgs pointerReleasedEventArgs)
         {
             if (pointerReleasedEventArgs.Source is Control control)
@@ -34,6 +53,21 @@ namespace ChaChaCha.Views
                         if (viewModel.ButtonPressed == 1)
                         {
                             viewModel.Shapes.Add(new LogicElement
+                            {
+                                Height = 100,
+                                FirstInput = true,
+                                SecondInput = false,
+                                ThirdInput = true,
+                                FirstOutput = false,
+                                SecondOutput = true,
+                                ThirdOutput = false,
+                                Width = 100,
+                                Name = "And",
+                                RealName = "And",
+                                RecColor = "Black",
+                                StartPoint = pointPointerReleased,
+                            });
+                            viewModel.Logic_elements.Add(new LogicElement
                             {
                                 Height = 100,
                                 FirstInput = true,
@@ -67,11 +101,41 @@ namespace ChaChaCha.Views
                                 ThirdOutput = false,
                                 StartPoint = pointPointerReleased,
                             });
+                            viewModel.Logic_elements.Add(new LogicElement
+                            {
+                                Height = 100,
+                                Width = 100,
+                                RealName = "Or",
+                                Name = "Or",
+                                RecColor = "Black",
+                                FirstInput = true,
+                                SecondInput = false,
+                                ThirdInput = true,
+                                FirstOutput = false,
+                                SecondOutput = true,
+                                ThirdOutput = false,
+                                StartPoint = pointPointerReleased,
+                            });
                             viewModel.ButtonPressed = 0;
                         }
                         else if (viewModel.ButtonPressed == 3)
                         {
                             viewModel.Shapes.Add(new LogicElement
+                            {
+                                Height = 100,
+                                Width = 100,
+                                Name = "Not",
+                                RealName = "Not",
+                                RecColor = "Black",
+                                FirstInput = false,
+                                SecondInput = true,
+                                ThirdInput = false,
+                                FirstOutput = false,
+                                SecondOutput = true,
+                                ThirdOutput = false,
+                                StartPoint = pointPointerReleased,
+                            });
+                            viewModel.Logic_elements.Add(new LogicElement
                             {
                                 Height = 100,
                                 Width = 100,
@@ -105,11 +169,41 @@ namespace ChaChaCha.Views
                                 ThirdOutput = false,
                                 StartPoint = pointPointerReleased,
                             });
+                            viewModel.Logic_elements.Add(new LogicElement
+                            {
+                                Height = 100,
+                                Width = 100,
+                                Name = "XOR",
+                                RealName = "XOR",
+                                RecColor = "Black",
+                                FirstInput = true,
+                                SecondInput = false,
+                                ThirdInput = true,
+                                FirstOutput = false,
+                                SecondOutput = true,
+                                ThirdOutput = false,
+                                StartPoint = pointPointerReleased,
+                            });
                             viewModel.ButtonPressed = 0;
                         }
                         else if (viewModel.ButtonPressed == 5)
                         {
                             viewModel.Shapes.Add(new LogicElement
+                            {
+                                Height = 100,
+                                Width = 100,
+                                Name = "SM",
+                                RealName = "SM",
+                                RecColor = "Black",
+                                FirstInput = true,
+                                SecondInput = true,
+                                ThirdInput = true,
+                                FirstOutput = true,
+                                SecondOutput = false,
+                                ThirdOutput = true,
+                                StartPoint = pointPointerReleased,
+                            });
+                            viewModel.Logic_elements.Add(new LogicElement
                             {
                                 Height = 100,
                                 Width = 100,
@@ -143,11 +237,41 @@ namespace ChaChaCha.Views
                                 ThirdOutput = false,
                                 StartPoint = pointPointerReleased,
                             });
+                            viewModel.Logic_elements.Add(new LogicElement
+                            {
+                                Height = 100,
+                                Width = 100,
+                                Name = "Input",
+                                RealName = "0",
+                                RecColor = "Green",
+                                FirstInput = false,
+                                SecondInput = false,
+                                ThirdInput = false,
+                                FirstOutput = false,
+                                SecondOutput = true,
+                                ThirdOutput = false,
+                                StartPoint = pointPointerReleased,
+                            });
                             viewModel.ButtonPressed = 0;
                         }
                         else if (viewModel.ButtonPressed == 7)
                         {
                             viewModel.Shapes.Add(new LogicElement
+                            {
+                                Height = 100,
+                                Width = 100,
+                                Name = "Output",
+                                RealName = "0",
+                                RecColor = "Red",
+                                FirstInput = false,
+                                SecondInput = true,
+                                ThirdInput = false,
+                                FirstOutput = false,
+                                SecondOutput = false,
+                                ThirdOutput = false,
+                                StartPoint = pointPointerReleased,
+                            });
+                            viewModel.Logic_elements.Add(new LogicElement
                             {
                                 Height = 100,
                                 Width = 100,
@@ -205,6 +329,7 @@ namespace ChaChaCha.Views
                             if (vModel.ButtonPressed == -1)
                             {
                                 vModel.Shapes.Remove(rectangle);
+                                vModel.Logic_elements.Remove(rectangle);
                                 vModel.ButtonPressed = 0;
                             }
                         }
@@ -228,6 +353,14 @@ namespace ChaChaCha.Views
                                 connector_id = id_counter++,
                                 FirstRectangle = rectangle,
                             });
+                            viewModel.All_connectors.Add(new Connector
+                            {
+                                StartPoint = pointPointerPressed,
+                                EndPoint = pointPointerPressed,
+                                Name = "Connector",
+                                connector_id = id_counter - 1,
+                                FirstRectangle = rectangle,
+                            });
                             this.PointerMoved += PointerMoveDrawLine;
                             this.PointerReleased += PointerPressedReleasedDrawLine;
                         }
@@ -240,6 +373,7 @@ namespace ChaChaCha.Views
                         if (vModel.ButtonPressed == -1)
                         {
                             vModel.Shapes.Remove(connector);
+                            vModel.All_connectors.Remove(connector);
                             vModel.ButtonPressed = 0;
                         }
                     }
@@ -278,6 +412,7 @@ namespace ChaChaCha.Views
             if (this.DataContext is MainWindowViewModel viewModel)
             {
                 Connector connector = viewModel.Shapes[viewModel.Shapes.Count - 1] as Connector;
+                Connector connector2 = viewModel.All_connectors[viewModel.All_connectors.Count - 1] as Connector;
                 Point currentPointerPosition = pointerEventArgs
                     .GetPosition(
                     this.GetVisualDescendants()
@@ -285,6 +420,9 @@ namespace ChaChaCha.Views
                     .FirstOrDefault());
 
                 connector.EndPoint = new Point(
+                        currentPointerPosition.X - 1,
+                        currentPointerPosition.Y - 1);
+                connector2.EndPoint = new Point(
                         currentPointerPosition.X - 1,
                         currentPointerPosition.Y - 1);
             }
@@ -311,8 +449,10 @@ namespace ChaChaCha.Views
                 if (ellipse.DataContext is LogicElement rectangle)
                 {
                     Connector connector = viewModel.Shapes[viewModel.Shapes.Count - 1] as Connector;
-                    connector.SecondRectangle = rectangle;
+                    Connector connector2 = viewModel.All_connectors[viewModel.All_connectors.Count - 1] as Connector;
                     rectangle.conntecor_ids.Add(id_counter - 1);
+                    connector.SecondRectangle = rectangle;
+                    connector2.SecondRectangle = rectangle;
                     //Debug.WriteLine(rectangle.conntecor_ids.Count);
                     if (this.DataContext is MainWindowViewModel vvModel)
                     {
@@ -323,6 +463,7 @@ namespace ChaChaCha.Views
             }
 
             viewModel.Shapes.RemoveAt(viewModel.Shapes.Count - 1);
+            viewModel.All_connectors.RemoveAt(viewModel.All_connectors.Count - 1);
         }
     }
 }

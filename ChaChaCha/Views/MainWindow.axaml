@@ -27,7 +27,7 @@
 				<MenuItem Width="100" Height="70" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Header="МЕНЮ">
 					<MenuItem Header="СОЗДАТЬ"/>
 					<MenuItem Header="ОТКРЫТЬ"/>
-					<MenuItem Header="СОХРАНИТЬ"/>
+					<MenuItem Click="ExportClick" Header="СОХРАНИТЬ"/>
 					<MenuItem Header="ВЫЙТИ"/>
 				</MenuItem>
 			</Menu>
