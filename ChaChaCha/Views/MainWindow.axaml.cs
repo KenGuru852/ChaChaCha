@@ -57,6 +57,15 @@ namespace ChaChaCha.Views
                 if (this.DataContext is MainWindowViewModel dataContext)
                 {
                     dataContext.LoadProject(path[0]);
+                    int newid = 0;
+                    foreach(var item in dataContext.All_connectors)
+                    {
+                        if (item.connector_id > newid)
+                        {
+                            newid = item.connector_id;
+                        }
+                    }
+                    id_counter = newid + 1;
                 }
             }
         }
