@@ -166,9 +166,57 @@ namespace ChaChaCha.ViewModels
         {
             All_connectors = new ObservableCollection<Connector>(jsonLoader.Load(path));
             Shapes.Clear();
-            foreach(var item in All_connectors)
+/*            foreach(var item in All_connectors)
             {
                 Debug.WriteLine(item.SecondRectangle.RecColor);
+            }*/
+            foreach(var item in All_connectors)
+            {
+                Shapes.Add(item);
+                if ((item.FirstRectangle.Name == "Input") || item.FirstRectangle.Name == "Output")
+                {
+                    Shapes.Add(item.FirstRectangle);
+                }
+                if ((item.SecondRectangle.Name == "Input") || item.SecondRectangle.Name == "Output")
+                {
+                    Shapes.Add(item.SecondRectangle);
+                }
+            }
+            foreach(var item in All_connectors)
+            {
+                if((item.SecondRectangle.Name == "And") || (item.SecondRectangle.Name == "Or") || (item.SecondRectangle.Name == "XOR") || (item.SecondRectangle.Name == "Not"))
+                {
+                    Shapes.Add(item.SecondRectangle);
+                    int temp = item.connector_id;
+                    foreach(var tempo in item.SecondRectangle.conntecor_ids)
+                    {
+                        if (tempo != temp)
+                        {
+                            foreach(var please in All_connectors)
+                            {
+                                if (please.connector_id == tempo)
+                                {
+                                    please.SecondRectangle = item.SecondRectangle; break;
+                                }
+                            }
+                        }
+                    }
+                    foreach(var yuppi in All_connectors)
+                    {
+                        var temp2 = yuppi.FirstRectangle.StartPoint;
+                        foreach (var yoppi in Shapes)
+                        {
+                            if (yoppi is LogicElement elem)
+                            {
+                                if (yoppi.StartPoint == temp2)
+                                {
+                                    yuppi.FirstRectangle = elem;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
             }
             Update();
             

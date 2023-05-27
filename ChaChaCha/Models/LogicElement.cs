@@ -191,7 +191,7 @@ namespace ChaChaCha.Models
                 con.SecondRectangle.RealName = con.FirstRectangle.output_value.ToString();
             }
             //Debug.WriteLine(con.SecondRectangle.output_value);
-            Debug.WriteLine(conntecor_ids.Count);
+            //Debug.WriteLine(conntecor_ids.Count);
         }
         public string RealName
         {
