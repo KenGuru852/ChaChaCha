@@ -24,6 +24,7 @@ namespace ChaChaCha.Views
         }
         public async void ExportClick(object? sender, RoutedEventArgs eventArgs)
         {
+            
             SaveFileDialog saveFileDialog = new SaveFileDialog();
 
             saveFileDialog.Filters.Add(
@@ -48,15 +49,21 @@ namespace ChaChaCha.Views
                new FileDialogFilter
                {
                    Name = "JSON files",
-                   Extensions = new string[] { "json" }.ToList()
+                   Extensions = new string[] { "json" }.ToList(),
+                   
                });
+            openFileDialog.AllowMultiple = true;
             string[]? path = await openFileDialog.ShowAsync(this);
+            foreach (var item in path)
+            {
+                Debug.WriteLine(item);
+            }
 
             if (path != null)
             {
                 if (this.DataContext is MainWindowViewModel dataContext)
                 {
-                    dataContext.LoadProject(path[0]);
+                    dataContext.LoadProject(path);
                     int newid = 0;
                     foreach(var item in dataContext.All_connectors)
                     {
@@ -65,7 +72,7 @@ namespace ChaChaCha.Views
                             newid = item.connector_id;
                         }
                     }
-                    id_counter = newid + 1;
+                    id_counter += 100;
                 }
             }
         }

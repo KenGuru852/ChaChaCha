@@ -45,7 +45,7 @@ namespace ChaChaCha.ViewModels
             get => buttonpressed;
             set => this.RaiseAndSetIfChanged(ref buttonpressed, value);
         }
-        private int circNumber;
+        private int circNumber = 0;
         public int CircNumber
         {
             get => circNumber;
@@ -56,8 +56,19 @@ namespace ChaChaCha.ViewModels
                 {
                     CircNumber = 0;
                 }
-                Shapes = shapesList[CircNumber];
-            
+                if (shapesList.Count != 0)
+                {
+                    Shapes = shapesList[circNumber];
+                    All_connectors.Clear();
+                    foreach (var item in Shapes)
+                    {
+                        if (item is Connector connector)
+                        {
+                            All_connectors.Add(connector);
+                        }
+                    }
+                    Debug.WriteLine(circNumber);
+                }
             }
         }
         private int andButton;
@@ -112,11 +123,18 @@ namespace ChaChaCha.ViewModels
             get => outputButton;
             set => this.RaiseAndSetIfChanged(ref outputButton, value);
         }
+        private List<int> all_id;
+        public List<int> allid
+        {
+            get => all_id;
+            set => this.RaiseAndSetIfChanged(ref all_id, value);
+        }
         /////////////////////////////////////////////////////////////////////////////////////
         public JSONProjectSaver jsonSaver = new JSONProjectSaver();
         public JSONProjectLoader jsonLoader = new JSONProjectLoader();
         public MainWindowViewModel()
         {
+            allid = new List<int>();
             logic_elements = new ObservableCollection<LogicElement>();
             all_connectors = new ObservableCollection<Connector>();
             shapes_name = new ObservableCollection<string>();
@@ -126,7 +144,7 @@ namespace ChaChaCha.ViewModels
             shapesList= new List<ObservableCollection<IElement>>();
             shapesList.Add(Shapes);
             CircNumber = 0;
-            Debug.WriteLine(shapesList.Count);
+            //Debug.WriteLine(shapesList.Count);
             buttonpressed = 0;
             //(ObservableCollection<LogicElement>, ObservableCollection<Connector>) tuple = (logic_elements, all_connectors);
         }
@@ -156,71 +174,109 @@ namespace ChaChaCha.ViewModels
         }
         public void SaveProject(string path)
         {
-            if (PathFile.GetExtension(path) == ".json")
+            if (shapesList != null)
+            {
+                string[] temp = path.Split("\\");
+                string newpath = "";
+                for (int i = 0; i < temp.Length - 1; i++)
+                {
+                    newpath += temp[i] + "\\";
+                }
+                for (int i = 0; i < shapesList.Count; i++)
+                {
+                    string newpath_temp = newpath + shapes_name[i] + ".json";
+                    all_connectors.Clear();
+                    foreach(var item in shapesList[i])
+                    {
+                        if (item is Connector connector)
+                        {
+                            all_connectors.Add(connector);
+                        }
+                    }
+                    jsonSaver.Save(all_connectors, newpath_temp);
+                   // Debug.WriteLine(newpath_temp);
+                }
+            }
+/*            if (PathFile.GetExtension(path) == ".json")
             {
                 //jsonSaver.Save(shapesList, path);
-                jsonSaver.Save(all_connectors, path);
-            }
-        }
-        public void LoadProject(string path)
-        {
-            All_connectors = new ObservableCollection<Connector>(jsonLoader.Load(path));
-            Shapes.Clear();
-/*            foreach(var item in All_connectors)
-            {
-                Debug.WriteLine(item.SecondRectangle.RecColor);
+                
             }*/
-            foreach(var item in All_connectors)
+        }
+        public void LoadProject(string[] path)
+        {
+            //Shapes = new ObservableCollection<IElement>();
+            shapesList.Clear();
+            logic_elements.Clear();
+            all_connectors.Clear();
+            shapes_name.Clear();
+            //shapesList.Add(Shapes);
+            if (path != null)
             {
-                Shapes.Add(item);
-                if ((item.FirstRectangle.Name == "Input") || item.FirstRectangle.Name == "Output")
+                for (int i = 0; i < path.Length; i++)
                 {
-                    Shapes.Add(item.FirstRectangle);
-                }
-                if ((item.SecondRectangle.Name == "Input") || item.SecondRectangle.Name == "Output")
-                {
-                    Shapes.Add(item.SecondRectangle);
-                }
-            }
-            foreach(var item in All_connectors)
-            {
-                if((item.SecondRectangle.Name == "And") || (item.SecondRectangle.Name == "Or") || (item.SecondRectangle.Name == "XOR") || (item.SecondRectangle.Name == "Not") || (item.SecondRectangle.Name == "SM"))
-                {
-                    Shapes.Add(item.SecondRectangle);
-                    int temp = item.connector_id;
-                    foreach(var tempo in item.SecondRectangle.conntecor_ids)
+                    List<int> allid = new List<int>();
+                    All_connectors = new ObservableCollection<Connector>(jsonLoader.Load(path[i]));
+                    //Debug.WriteLine(path);
+                    ObservableCollection<IElement> shapetemp = new ObservableCollection<IElement>();
+                    foreach (var item in All_connectors)
                     {
-                        if (tempo != temp)
+                        shapetemp.Add(item);
+                        allid.Add(item.connector_id);
+                        if ((item.FirstRectangle.Name == "Input") || item.FirstRectangle.Name == "Output")
                         {
-                            foreach(var please in All_connectors)
+                            shapetemp.Add(item.FirstRectangle);
+                        }
+                        if ((item.SecondRectangle.Name == "Input") || item.SecondRectangle.Name == "Output")
+                        {
+                            shapetemp.Add(item.SecondRectangle);
+                        }
+                    }
+                    foreach (var item in All_connectors)
+                    {
+                        if ((item.SecondRectangle.Name == "And") || (item.SecondRectangle.Name == "Or") || (item.SecondRectangle.Name == "XOR") || (item.SecondRectangle.Name == "Not") || (item.SecondRectangle.Name == "SM"))
+                        {
+                            shapetemp.Add(item.SecondRectangle);
+                            int temp = item.connector_id;
+                            foreach (var tempo in item.SecondRectangle.conntecor_ids)
                             {
-                                if (please.connector_id == tempo)
+                                if (tempo != temp)
                                 {
-                                    please.SecondRectangle = item.SecondRectangle; break;
+                                    foreach (var please in All_connectors)
+                                    {
+                                        if (please.connector_id == tempo)
+                                        {
+                                            please.SecondRectangle = item.SecondRectangle; break;
+                                        }
+                                    }
+                                }
+                            }
+                            foreach (var yuppi in All_connectors)
+                            {
+                                var temp2 = yuppi.FirstRectangle.StartPoint;
+                                foreach (var yoppi in shapetemp)
+                                {
+                                    if (yoppi is LogicElement elem)
+                                    {
+                                        if (yoppi.StartPoint == temp2)
+                                        {
+                                            yuppi.FirstRectangle = elem;
+                                            break;
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                    foreach(var yuppi in All_connectors)
-                    {
-                        var temp2 = yuppi.FirstRectangle.StartPoint;
-                        foreach (var yoppi in Shapes)
-                        {
-                            if (yoppi is LogicElement elem)
-                            {
-                                if (yoppi.StartPoint == temp2)
-                                {
-                                    yuppi.FirstRectangle = elem;
-                                    break;
-                                }
-                            }
-                        }
-                    }
+                    shapesList.Add(shapetemp);
+                    string[] newParseString = path[i].Split("\\");
+                    shapes_name.Add(newParseString[newParseString.Length - 1].Substring(0, newParseString[newParseString.Length - 1].Length - 5));
+                    Update();
                 }
             }
-            Update();
+            Shapes = shapesList[0];
             
-            //Debug.WriteLine(All_connectors.Count);
+            Debug.WriteLine(shapesList.Count);
         }
         public void Update()
         {

@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls.Shapes;
+using ChaChaCha.ViewModels;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
@@ -313,7 +314,6 @@ namespace ChaChaCha.Models
                 writer.WriteString("Y_Start", con.StartPoint.Y.ToString());
                 writer.WriteString("X_End", con.EndPoint.X.ToString());
                 writer.WriteString("Y_End", con.EndPoint.Y.ToString());
-               
                 writer.WriteString("First_Rec_Name", con.FirstRectangle.Name);
                 writer.WriteString("First_Rec_RealName", con.FirstRectangle.RealName);
                 writer.WriteString("First_Rec_RecColor", con.FirstRectangle.RecColor);
