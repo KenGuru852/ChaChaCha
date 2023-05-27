@@ -17,12 +17,18 @@ namespace ChaChaCha.Models
         {
             using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
             {
-                JsonSerializer.Serialize(fs, con,
+                JsonSerializer.Serialize<ObservableCollection<Connector>>
+                    (fs, con, new JsonSerializerOptions
+                    {
+                        Converters = {new ElementJSONConverter()},
+                        WriteIndented = true
+                    });
+               /* JsonSerializer.Serialize(fs, con,
                     new JsonSerializerOptions
                     {
                         WriteIndented = true,
                         IncludeFields = true
-                    });
+                    });*/
             }
         }
     }

@@ -114,6 +114,7 @@ namespace ChaChaCha.ViewModels
         }
         /////////////////////////////////////////////////////////////////////////////////////
         public JSONProjectSaver jsonSaver = new JSONProjectSaver();
+        public JSONProjectLoader jsonLoader = new JSONProjectLoader();
         public MainWindowViewModel()
         {
             logic_elements = new ObservableCollection<LogicElement>();
@@ -160,6 +161,18 @@ namespace ChaChaCha.ViewModels
                 //jsonSaver.Save(shapesList, path);
                 jsonSaver.Save(all_connectors, path);
             }
+        }
+        public void LoadProject(string path)
+        {
+            All_connectors = new ObservableCollection<Connector>(jsonLoader.Load(path));
+            Shapes.Clear();
+            foreach(var item in All_connectors)
+            {
+                Debug.WriteLine(item.SecondRectangle.RecColor);
+            }
+            Update();
+            
+            //Debug.WriteLine(All_connectors.Count);
         }
         public void Update()
         {

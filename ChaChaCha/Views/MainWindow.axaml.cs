@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
 using Avalonia.Controls.Shapes;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -21,7 +22,7 @@ namespace ChaChaCha.Views
         {
             InitializeComponent();
         }
-        public async void ExportClick(object sender, RoutedEventArgs eventArgs)
+        public async void ExportClick(object? sender, RoutedEventArgs eventArgs)
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
 
@@ -37,6 +38,25 @@ namespace ChaChaCha.Views
                 if (this.DataContext is MainWindowViewModel dataContext)
                 {
                     dataContext.SaveProject(path);
+                }
+            }
+        }
+        public async void ImportClick(object? sender, RoutedEventArgs eventsArgs)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filters.Add(
+               new FileDialogFilter
+               {
+                   Name = "JSON files",
+                   Extensions = new string[] { "json" }.ToList()
+               });
+            string[]? path = await openFileDialog.ShowAsync(this);
+
+            if (path != null)
+            {
+                if (this.DataContext is MainWindowViewModel dataContext)
+                {
+                    dataContext.LoadProject(path[0]);
                 }
             }
         }
@@ -450,9 +470,9 @@ namespace ChaChaCha.Views
                 {
                     Connector connector = viewModel.Shapes[viewModel.Shapes.Count - 1] as Connector;
                     Connector connector2 = viewModel.All_connectors[viewModel.All_connectors.Count - 1] as Connector;
-                    rectangle.conntecor_ids.Add(id_counter - 1);
                     connector.SecondRectangle = rectangle;
                     connector2.SecondRectangle = rectangle;
+                    rectangle.conntecor_ids.Add(id_counter - 1);
                     //Debug.WriteLine(rectangle.conntecor_ids.Count);
                     if (this.DataContext is MainWindowViewModel vvModel)
                     {
