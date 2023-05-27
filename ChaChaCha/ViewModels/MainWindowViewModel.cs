@@ -184,7 +184,7 @@ namespace ChaChaCha.ViewModels
             }
             foreach(var item in All_connectors)
             {
-                if((item.SecondRectangle.Name == "And") || (item.SecondRectangle.Name == "Or") || (item.SecondRectangle.Name == "XOR") || (item.SecondRectangle.Name == "Not"))
+                if((item.SecondRectangle.Name == "And") || (item.SecondRectangle.Name == "Or") || (item.SecondRectangle.Name == "XOR") || (item.SecondRectangle.Name == "Not") || (item.SecondRectangle.Name == "SM"))
                 {
                     Shapes.Add(item.SecondRectangle);
                     int temp = item.connector_id;
