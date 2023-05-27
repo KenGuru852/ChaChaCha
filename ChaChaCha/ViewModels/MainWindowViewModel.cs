@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls.Shapes;
+﻿using Avalonia.Controls;
+using Avalonia.Controls.Shapes;
 using Avalonia.Markup.Xaml.Templates;
 using ChaChaCha.Models;
 using ReactiveUI;
@@ -132,6 +133,25 @@ namespace ChaChaCha.ViewModels
         /////////////////////////////////////////////////////////////////////////////////////
         public JSONProjectSaver jsonSaver = new JSONProjectSaver();
         public JSONProjectLoader jsonLoader = new JSONProjectLoader();
+        public void AddWindow(Window window)
+        {
+            window.Show();
+        }
+        public void CreateClick()
+        {
+            allid.Clear();
+            logic_elements.Clear();
+            all_connectors.Clear();
+            shapes_name.Clear();
+            shapes_name.Add("first_citcuit");
+            currentCircName = shapes_name[0];
+            Shapes.Clear();
+            shapesList.Clear();
+            shapesList.Add(Shapes);
+            CircNumber = 0;
+            //Debug.WriteLine(shapesList.Count);
+            buttonpressed = 0;
+        }
         public MainWindowViewModel()
         {
             allid = new List<int>();

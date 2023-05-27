@@ -9,11 +9,17 @@ using ChaChaCha.Models;
 using ChaChaCha.ViewModels;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows;
+using Avalonia.Controls.ApplicationLifetimes;
+using System.Security.AccessControl;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace ChaChaCha.Views
 {
     public partial class MainWindow : Window
     {
+        readonly MainWindowViewModel firstWindow;
         int id_counter = 0;
         private Point pointPointerReleased;
         private Point pointPointerPressed;
@@ -21,6 +27,21 @@ namespace ChaChaCha.Views
         public MainWindow()
         {
             InitializeComponent();
+            firstWindow = new MainWindowViewModel();
+            DataContext =firstWindow;
+            firstWindow.AddWindow(this);
+        }
+        public async void ExitClick(object? sender, RoutedEventArgs eventArgs)
+        {
+            pointerPositionIntoShape = new Point(-104821, double.Parse("asaisrfy"));
+        }
+        public async void CreateProject(object? sender, RoutedEventArgs eventArgs)
+        {
+            if (this.DataContext is MainWindowViewModel dataContext)
+            {
+
+
+            }
         }
         public async void ExportClick(object? sender, RoutedEventArgs eventArgs)
         {
