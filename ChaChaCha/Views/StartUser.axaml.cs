@@ -15,12 +15,5 @@ namespace ChaChaCha.Views
         {
             InitializeComponent();
         }
-        private void PointerMoveDrawLine(object? sender, PointerEventArgs pointerEventArgs)
-        {
-            if (this.DataContext is MainWindowViewModel viewModel)
-            {
-                Debug.WriteLine("asd");
-            }
-        }
     }
 }

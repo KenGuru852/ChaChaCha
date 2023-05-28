@@ -2,10 +2,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 			    xmlns:vm="using:ChaChaCha.ViewModels"
+				xmlns:models="clr-namespace:ChaChaCha.Models"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="1350" d:DesignHeight="800"
 			 Width="1350" Height="800"
              x:Class="ChaChaCha.Views.StartUser">
+
+		
 	<Grid ColumnDefinitions="450,450,450">
 		<TextBlock Grid.Column="0" Background="Blue">
 		</TextBlock>
@@ -15,7 +18,7 @@
 			<Button Command="{Binding $parent[Window].DataContext.CreateClick}" Background="Black" Margin="50 20" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="350" Height="75">
 				<TextBlock Text="СОЗДАТЬ ПРОЕКТ" Foreground="White" FontSize="35"/>
 			</Button>
-			<Button Command="{Binding $parent[Window].DataContext.CreateClick}" Background="Black" Margin="50 20" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="350" Height="75">
+			<Button Command="{Binding $parent[Window].DataContext.OpenProject}" Background="Black" Margin="50 20" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="350" Height="75">
 				<TextBlock Text="ОТКРЫТЬ ПРОЕКТ" Foreground="White" FontSize="35"/>
 			</Button>
 			<Button Command="{Binding $parent[Window].DataContext.ExitClick}" Background="Black" Margin="50 20" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="350" Height="75">
@@ -23,7 +26,16 @@
 			</Button>
 			
 			<Border BorderThickness="6" BorderBrush="Red" Height="425" Width="350">
-				
+				<ListBox SelectedIndex="{Binding ProjectIndex}" Items="{Binding Last_Projects}">
+					<ListBox.ItemTemplate>
+						<DataTemplate DataType="{x:Type models:ProjectInfo}">
+							<Grid RowDefinitions="30,30">
+								<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Grid.Row="0" Text="{Binding Project_Name}"/>
+								<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="20" Grid.Row="1" Text="{Binding Project_Date}"/>
+							</Grid>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
 			</Border>
 			
 		</StackPanel>

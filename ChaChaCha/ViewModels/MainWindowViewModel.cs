@@ -6,6 +6,7 @@ using Avalonia.Markup.Xaml.Templates;
 using ChaChaCha.Models;
 using ChaChaCha.Views;
 using ReactiveUI;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,6 +30,12 @@ namespace ChaChaCha.ViewModels
         {
             get => logic_elements;
             set => this.RaiseAndSetIfChanged(ref logic_elements, value);
+        }
+        private ObservableCollection<ProjectInfo> last_Projects;
+        public ObservableCollection<ProjectInfo> Last_Projects
+        {
+            get => last_Projects;
+            set => this.RaiseAndSetIfChanged(ref last_Projects, value);
         }
         private ObservableCollection<Connector> all_connectors;
         public ObservableCollection<Connector> All_connectors
@@ -137,6 +144,8 @@ namespace ChaChaCha.ViewModels
         /////////////////////////////////////////////////////////////////////////////////////
         public JSONProjectSaver jsonSaver = new JSONProjectSaver();
         public JSONProjectLoader jsonLoader = new JSONProjectLoader();
+        public JSONProjectInfoSaver jsonProjSaver = new JSONProjectInfoSaver();
+        public JSONProjectInfoLoader jsonProLoader = new JSONProjectInfoLoader();
         public void AddWindow(Window window)
         {
             window.Show();
@@ -209,8 +218,35 @@ namespace ChaChaCha.ViewModels
             get => startWindow;
             set => this.RaiseAndSetIfChanged(ref startWindow, value);
         }
+        private int projectIndex;
+        public int ProjectIndex
+        {
+            get => projectIndex;
+            set => this.RaiseAndSetIfChanged(ref projectIndex, value);
+        }
+        private string projectName;
+        public string ProjectName
+        {
+            get => projectName;
+            set => this.RaiseAndSetIfChanged(ref projectName, value);
+        }
+        public void OpenProject()
+        {
+            LoadProject(last_Projects[projectIndex].Project_Path.ToArray());
+            StartWindow = true;
+            Content = allContent[1];
+            ProjectName = last_Projects[projectIndex].Project_Name.ToString();
+        }
         public MainWindowViewModel()
         {
+            ProjectName = "New project";
+            last_Projects = new ObservableCollection<ProjectInfo>();
+            last_Projects = jsonProLoader.Load("../../../../projects_list.json");
+           /* last_Projects.Add(new ProjectInfo
+            {
+                Project_Name = "FirstProject",
+                Project_Date = "25.05.2025"
+            });*/
             StartWindow = false;
             allid = new List<int>();
             logic_elements = new ObservableCollection<LogicElement>();
@@ -226,6 +262,7 @@ namespace ChaChaCha.ViewModels
             Debug.WriteLine(Content);
             //Debug.WriteLine(shapesList.Count);
             buttonpressed = 0;
+            Debug.WriteLine(DateTime.Now);
             //(ObservableCollection<LogicElement>, ObservableCollection<Connector>) tuple = (logic_elements, all_connectors);
         }
         public void ElementToDraw(int number)
@@ -254,6 +291,8 @@ namespace ChaChaCha.ViewModels
         }
         public void SaveProject(string path)
         {
+            List<string> all_paths = new List<string>();
+            string pr_name = "";
             if (shapesList != null)
             {
                 string[] temp = path.Split("\\");
@@ -261,6 +300,10 @@ namespace ChaChaCha.ViewModels
                 for (int i = 0; i < temp.Length - 1; i++)
                 {
                     newpath += temp[i] + "\\";
+                    if (i == temp.Length - 2)
+                    {
+                        pr_name = temp[i];
+                    }
                 }
                 for (int i = 0; i < shapesList.Count; i++)
                 {
@@ -273,15 +316,24 @@ namespace ChaChaCha.ViewModels
                             all_connectors.Add(connector);
                         }
                     }
+                    all_paths.Add(newpath_temp);
                     jsonSaver.Save(all_connectors, newpath_temp);
                    // Debug.WriteLine(newpath_temp);
                 }
             }
-/*            if (PathFile.GetExtension(path) == ".json")
+            last_Projects.Add(new ProjectInfo
             {
-                //jsonSaver.Save(shapesList, path);
-                
-            }*/
+                Project_Name = pr_name,
+                Project_Path = all_paths,
+                Project_Date = DateTime.Now.ToString()
+            }) ;
+
+            /*            if (PathFile.GetExtension(path) == ".json")
+                        {
+                            //jsonSaver.Save(shapesList, path);
+
+                        }*/
+            jsonProjSaver.Save(last_Projects, "../../../../projects_list.json");
         }
         public void LoadProject(string[] path)
         {
