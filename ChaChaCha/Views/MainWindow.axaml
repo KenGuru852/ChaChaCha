@@ -3,17 +3,104 @@
         xmlns:vm="using:ChaChaCha.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		xmlns:views="clr-namespace:ChaChaCha.Views"
+		xmlns:models="clr-namespace:ChaChaCha.Models"
+        mc:Ignorable="d" d:DesignWidth="1350" d:DesignHeight="800"
+		Width="1350" Height="800"
         x:Class="ChaChaCha.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="ChaChaCha">
-
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainWindowViewModel/>
-    </Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+	
+	<Grid RowDefinitions="70, *">
+		<ContentControl Grid.Row="0" Grid.RowSpan="2" Content="{Binding
+						Content}"/>
+		<Grid IsEnabled="{Binding StartWindow}" IsVisible="{Binding StartWindow}" Grid.Row="0" ColumnDefinitions="100, 100,70, 70, 70, 70, 70, 70, 100, 100, 80, 200, 50, 200">
+			<!--	<Button Width="100" Grid.Column="0" Height="70" Grid.Row="0">
+				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">МЕНЮ</TextBlock>
+			</Button>
+			-->
+			<Menu Background="#CCCCCC" Width="100" Height="70" Grid.Column="0">
+				<MenuItem Width="100" Height="70" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Center" Header="МЕНЮ">
+					<MenuItem Command="{Binding $parent[Window].DataContext.CreateClick}" Header="СОЗДАТЬ"/>
+					<MenuItem Click="ImportClick" Header="ОТКРЫТЬ"/>
+					<MenuItem Click="ExportClick" Header="СОХРАНИТЬ"/>
+					<MenuItem Click="ExitClick" Header="ВЫЙТИ"/>
+				</MenuItem>
+			</Menu>
+			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="-1" Height="70" Width="70" Grid.Column="1">
+				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">DEL</TextBlock>
+			</Button>
+			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="1" Width="70" Height="70" Grid.Column="2">
+				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">И</TextBlock>
+			</Button>
+			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="2" Height="70" Width="70" Grid.Column="3">
+				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">ИЛИ</TextBlock>
+			</Button>
+			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="3" Height="70" Width="70" Grid.Column="4">
+				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">НЕ</TextBlock>
+			</Button>
+			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="4" Height="70" Width="70" Grid.Column="5">
+				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">XOR</TextBlock>
+			</Button>
+			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="5" Height="70" Width="70" Grid.Column="6">
+				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">SM</TextBlock>
+			</Button>
+			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="6" Width="100" Height="70" Grid.Column="8">
+				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">ВХОД</TextBlock>
+			</Button>
+			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="7" Width="100" Height="70" Grid.Column="9">
+				<TextBlock FontSize="22" TextAlignment="Center" VerticalAlignment="Center">ВЫХОД</TextBlock>
+			</Button>
+			<Border Width="200" Height="70" BorderBrush="Red" BorderThickness="6" Grid.Column="11">
+				<TextBlock FontSize="18" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding ProjectName}"></TextBlock>
+			</Border>
+			<Button Command="{Binding $parent[Window].DataContext.Rename}" CommandParameter="6" Width="50" Height="70" Grid.Column="12">Rename</Button>
+			<Border Width="200" Height="70" BorderBrush="Blue" BorderThickness="6" Grid.Column="13">
+				<TextBox FontSize="18" VerticalContentAlignment="Center" TextAlignment="Center" Text="{Binding CurrentCircName}"></TextBox>
+			</Border>
+		</Grid>
+		<Grid PointerPressed="OnPointerPressed"  Grid.Row="1" ColumnDefinitions="200, *">
+			<ItemsControl PointerReleased="OnPointerReleased" Items="{Binding Shapes}" Grid.Column="1">
+				<ItemsControl.ItemsPanel>
+					<ItemsPanelTemplate>
+						<Canvas IsEnabled="{Binding StartWindow}" IsVisible="{Binding StartWindow}" Name="canvas" Background="White"/>
+					</ItemsPanelTemplate>
+				</ItemsControl.ItemsPanel>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+				<ItemsControl.DataTemplates>
+					<DataTemplate DataType="{x:Type	models:LogicElement}">
+						<views:Element>
+							<views:Element.RenderTransform>
+								<TranslateTransform X="{Binding StartPoint.X}"
+													Y="{Binding StartPoint.Y}"/>
+							</views:Element.RenderTransform>
+						</views:Element>
+					</DataTemplate>
+
+					<DataTemplate DataType="{x:Type	models:Connector}">
+						<Line StartPoint="{Binding StartPoint}"
+							  EndPoint="{Binding EndPoint}"
+							  Stroke="Black"
+							  StrokeThickness="4"/>
+					</DataTemplate>
+				</ItemsControl.DataTemplates>
+
+			</ItemsControl>
+			<Border IsEnabled="{Binding StartWindow}" IsVisible="{Binding StartWindow}" BorderBrush="Green" BorderThickness="6" Grid.Column="0">
+				<StackPanel >
+					<TextBlock TextAlignment="Center" FontSize="25" Text="Список схем"></TextBlock>
+					<Line StrokeThickness="4" Stroke="Green" StartPoint="0 0" EndPoint="190 0"></Line>
+					<Button Command="{Binding $parent[Window].DataContext.AddCircuit}" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Width="190" Height="40" Background="Green">ADD CIRCUIT</Button>
+					<Button Command="{Binding $parent[Window].DataContext.DeleteCircuit}" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Width="190" Height="40" Background="Red">DELETE CIRCUIT</Button>
+					<ListBox SelectedIndex="{Binding CircNumber}" Items="{Binding Shapes_name}"></ListBox>
+				</StackPanel>
+			</Border>
+		</Grid>
+	</Grid>
 
 </Window>
