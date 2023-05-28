@@ -15,8 +15,11 @@
              to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
 		<vm:MainWindowViewModel/>
 	</Design.DataContext>
+	
 	<Grid RowDefinitions="70, *">
-		<Grid Grid.Row="0" ColumnDefinitions="100, 100,70, 70, 70, 70, 70, 70, 100, 100, 80, 200, 50, 200">
+		<ContentControl Grid.Row="0" Grid.RowSpan="2" Content="{Binding
+						Content}"/>
+		<Grid IsEnabled="{Binding StartWindow}" IsVisible="{Binding StartWindow}" Grid.Row="0" ColumnDefinitions="100, 100,70, 70, 70, 70, 70, 70, 100, 100, 80, 200, 50, 200">
 			<!--	<Button Width="100" Grid.Column="0" Height="70" Grid.Row="0">
 				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">МЕНЮ</TextBlock>
 			</Button>
@@ -65,7 +68,7 @@
 			<ItemsControl PointerReleased="OnPointerReleased" Items="{Binding Shapes}" Grid.Column="1">
 				<ItemsControl.ItemsPanel>
 					<ItemsPanelTemplate>
-						<Canvas Name="canvas" Background="White"/>
+						<Canvas IsEnabled="{Binding StartWindow}" IsVisible="{Binding StartWindow}" Name="canvas" Background="White"/>
 					</ItemsPanelTemplate>
 				</ItemsControl.ItemsPanel>
 
@@ -88,8 +91,8 @@
 				</ItemsControl.DataTemplates>
 
 			</ItemsControl>
-			<Border BorderBrush="Green" BorderThickness="6" Grid.Column="0">
-				<StackPanel>
+			<Border IsEnabled="{Binding StartWindow}" IsVisible="{Binding StartWindow}" BorderBrush="Green" BorderThickness="6" Grid.Column="0">
+				<StackPanel >
 					<TextBlock TextAlignment="Center" FontSize="25" Text="Список схем"></TextBlock>
 					<Line StrokeThickness="4" Stroke="Green" StartPoint="0 0" EndPoint="190 0"></Line>
 					<Button Command="{Binding $parent[Window].DataContext.AddCircuit}" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Width="190" Height="40" Background="Green">ADD CIRCUIT</Button>

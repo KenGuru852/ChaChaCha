@@ -35,14 +35,6 @@ namespace ChaChaCha.Views
         {
             pointerPositionIntoShape = new Point(-104821, double.Parse("asaisrfy"));
         }
-        public async void CreateProject(object? sender, RoutedEventArgs eventArgs)
-        {
-            if (this.DataContext is MainWindowViewModel dataContext)
-            {
-
-
-            }
-        }
         public async void ExportClick(object? sender, RoutedEventArgs eventArgs)
         {
             
@@ -94,6 +86,8 @@ namespace ChaChaCha.Views
                         }
                     }
                     id_counter += 100;
+                    dataContext.Content = dataContext.allContent[1];
+                    dataContext.StartWindow = true;
                 }
             }
         }

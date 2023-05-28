@@ -22,7 +22,6 @@ namespace ChaChaCha
                     DataContext = new MainWindowViewModel(),
                 };
             }
-
             base.OnFrameworkInitializationCompleted();
         }
     }

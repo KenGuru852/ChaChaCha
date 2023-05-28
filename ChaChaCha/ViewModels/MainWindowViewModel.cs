@@ -1,12 +1,16 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
+using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml.Templates;
 using ChaChaCha.Models;
+using ChaChaCha.Views;
 using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using PathFile = System.IO.Path;
 
 namespace ChaChaCha.ViewModels
@@ -68,7 +72,7 @@ namespace ChaChaCha.ViewModels
                             All_connectors.Add(connector);
                         }
                     }
-                    Debug.WriteLine(circNumber);
+                    //Debug.WriteLine(circNumber);
                 }
             }
         }
@@ -137,6 +141,39 @@ namespace ChaChaCha.ViewModels
         {
             window.Show();
         }
+/*        public async void ImportClick(object? sender, RoutedEventArgs eventsArgs)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filters.Add(
+               new FileDialogFilter
+               {
+                   Name = "JSON files",
+                   Extensions = new string[] { "json" }.ToList(),
+
+               });
+            openFileDialog.AllowMultiple = true;
+            string[]? path = await openFileDialog.ShowAsync(this);
+
+            if (path != null)
+            {
+                    LoadProject(path);
+                    int newid = 0;
+                    foreach (var item in All_connectors)
+                    {
+                        if (item.connector_id > newid)
+                        {
+                            newid = item.connector_id;
+                        }
+                    }
+                    Content = allContent[1];
+                    StartWindow = true;
+                }
+            
+        }*/
+        public void ExitClick()
+        {
+            Content = allContent[86];
+        }
         public void CreateClick()
         {
             allid.Clear();
@@ -149,11 +186,32 @@ namespace ChaChaCha.ViewModels
             shapesList.Clear();
             shapesList.Add(Shapes);
             CircNumber = 0;
+            Content = allContent[1];
+            StartWindow = true;
             //Debug.WriteLine(shapesList.Count);
             buttonpressed = 0;
         }
+        private UserControl content;
+
+        public readonly UserControl[] allContent = new UserControl[]
+        {
+            new StartUser(),
+            new EmptyWindow()
+        };
+        public UserControl Content
+        {
+            get { return content; }
+            set { this.RaiseAndSetIfChanged(ref content, value); }
+        }
+        private bool startWindow;
+        public bool StartWindow
+        {
+            get => startWindow;
+            set => this.RaiseAndSetIfChanged(ref startWindow, value);
+        }
         public MainWindowViewModel()
         {
+            StartWindow = false;
             allid = new List<int>();
             logic_elements = new ObservableCollection<LogicElement>();
             all_connectors = new ObservableCollection<Connector>();
@@ -164,6 +222,8 @@ namespace ChaChaCha.ViewModels
             shapesList= new List<ObservableCollection<IElement>>();
             shapesList.Add(Shapes);
             CircNumber = 0;
+            Content = allContent[0];
+            Debug.WriteLine(Content);
             //Debug.WriteLine(shapesList.Count);
             buttonpressed = 0;
             //(ObservableCollection<LogicElement>, ObservableCollection<Connector>) tuple = (logic_elements, all_connectors);
@@ -296,7 +356,7 @@ namespace ChaChaCha.ViewModels
             }
             Shapes = shapesList[0];
             
-            Debug.WriteLine(shapesList.Count);
+            //Debug.WriteLine(shapesList.Count);
         }
         public void Update()
         {
