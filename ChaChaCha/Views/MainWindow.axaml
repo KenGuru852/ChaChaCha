@@ -32,28 +32,28 @@
 					<MenuItem Click="ExitClick" Header="ВЫЙТИ"/>
 				</MenuItem>
 			</Menu>
-			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="-1" Height="70" Width="70" Grid.Column="1">
+			<Button Name="DelButton" Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="-1" Height="70" Width="70" Grid.Column="1">
 				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">DEL</TextBlock>
 			</Button>
-			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="1" Width="70" Height="70" Grid.Column="2">
+			<Button Name="AndButton" Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="1" Width="70" Height="70" Grid.Column="2">
 				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">И</TextBlock>
 			</Button>
-			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="2" Height="70" Width="70" Grid.Column="3">
+			<Button Name="OrButton" Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="2" Height="70" Width="70" Grid.Column="3">
 				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">ИЛИ</TextBlock>
 			</Button>
-			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="3" Height="70" Width="70" Grid.Column="4">
+			<Button Name="NotButton" Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="3" Height="70" Width="70" Grid.Column="4">
 				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">НЕ</TextBlock>
 			</Button>
-			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="4" Height="70" Width="70" Grid.Column="5">
+			<Button Name="XorButton" Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="4" Height="70" Width="70" Grid.Column="5">
 				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">XOR</TextBlock>
 			</Button>
-			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="5" Height="70" Width="70" Grid.Column="6">
+			<Button Name="SMButton" Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="5" Height="70" Width="70" Grid.Column="6">
 				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">SM</TextBlock>
 			</Button>
-			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="6" Width="100" Height="70" Grid.Column="8">
+			<Button Name="InputButton" Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="6" Width="100" Height="70" Grid.Column="8">
 				<TextBlock FontSize="25" TextAlignment="Center" VerticalAlignment="Center">ВХОД</TextBlock>
 			</Button>
-			<Button Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="7" Width="100" Height="70" Grid.Column="9">
+			<Button Name="OutputButton" Command="{Binding $parent[Window].DataContext.ElementToDraw}" CommandParameter="7" Width="100" Height="70" Grid.Column="9">
 				<TextBlock FontSize="22" TextAlignment="Center" VerticalAlignment="Center">ВЫХОД</TextBlock>
 			</Button>
 			<Border Width="200" Height="70" BorderBrush="Red" BorderThickness="6" Grid.Column="11">
