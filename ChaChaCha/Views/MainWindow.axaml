@@ -59,9 +59,9 @@
 			<Border Width="200" Height="70" BorderBrush="Red" BorderThickness="6" Grid.Column="11">
 				<TextBlock FontSize="18" VerticalAlignment="Center" TextAlignment="Center" Text="{Binding ProjectName}"></TextBlock>
 			</Border>
-			<Button Command="{Binding $parent[Window].DataContext.Rename}" CommandParameter="6" Width="50" Height="70" Grid.Column="12">Rename</Button>
+			<Button Name="RenameButton" Command="{Binding $parent[Window].DataContext.Rename}" CommandParameter="6" Width="50" Height="70" Grid.Column="12">Rename</Button>
 			<Border Width="200" Height="70" BorderBrush="Blue" BorderThickness="6" Grid.Column="13">
-				<TextBox FontSize="18" VerticalContentAlignment="Center" TextAlignment="Center" Text="{Binding CurrentCircName}"></TextBox>
+				<TextBox Name="textbox" FontSize="18" VerticalContentAlignment="Center" TextAlignment="Center" Text="{Binding CurrentCircName}"></TextBox>
 			</Border>
 		</Grid>
 		<Grid PointerPressed="OnPointerPressed"  Grid.Row="1" ColumnDefinitions="200, *">
@@ -95,9 +95,9 @@
 				<StackPanel >
 					<TextBlock TextAlignment="Center" FontSize="25" Text="Список схем"></TextBlock>
 					<Line StrokeThickness="4" Stroke="Green" StartPoint="0 0" EndPoint="190 0"></Line>
-					<Button Command="{Binding $parent[Window].DataContext.AddCircuit}" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Width="190" Height="40" Background="Green">ADD CIRCUIT</Button>
-					<Button Command="{Binding $parent[Window].DataContext.DeleteCircuit}" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Width="190" Height="40" Background="Red">DELETE CIRCUIT</Button>
-					<ListBox SelectedIndex="{Binding CircNumber}" Items="{Binding Shapes_name}"></ListBox>
+					<Button Name="AddButton" Command="{Binding $parent[Window].DataContext.AddCircuit}" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Width="190" Height="40" Background="Green">ADD CIRCUIT</Button>
+					<Button Name="DeleteButton" Command="{Binding $parent[Window].DataContext.DeleteCircuit}" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" Width="190" Height="40" Background="Red">DELETE CIRCUIT</Button>
+					<ListBox Name="listbox" SelectedIndex="{Binding CircNumber}" Items="{Binding Shapes_name}"></ListBox>
 				</StackPanel>
 			</Border>
 		</Grid>
